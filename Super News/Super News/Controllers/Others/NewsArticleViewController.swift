@@ -11,8 +11,11 @@ class NewsArticleViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.prefersLargeTitles = false
+        title = "hihidshakuhsdaffskadhsafkdhdgkjgjknddgnjkdfgjnkdfnjkgdfsjkngffnjk"
     }
     
 

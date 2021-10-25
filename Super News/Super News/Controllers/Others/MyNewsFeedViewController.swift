@@ -1,20 +1,25 @@
 //
-//  NewsFeedViewController.swift
+//  MyNewsFeedViewController.swift
 //  Super News
 //
-//  Created by Jeffrey Ip on 24/10/2021.
+//  Created by Jeffrey Ip on 25/10/2021.
 //
 
 import UIKit
 
-class NewsFeedViewController: UIViewController {
+class MyNewsFeedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        print(self.navigationController!)
-        print("...")
+        view.backgroundColor = UIColor.white
+        navigationController?.navigationBar.prefersLargeTitles = true
+        title = "Newspaper"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(search))
         // Do any additional setup after loading the view.
+    }
+    
+    @objc func search(){
+        
     }
     
 

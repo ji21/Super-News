@@ -7,12 +7,12 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print("profile view controller")
+        view.backgroundColor = UIColor.black
     }
     
 
