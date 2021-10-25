@@ -1,5 +1,5 @@
 //
-//  ExploreViewController.swift
+//  NewsViewController.swift
 //  Super News
 //
 //  Created by Jeffrey Ip on 24/10/2021.
@@ -7,14 +7,12 @@
 
 import UIKit
 
-class DiscoverViewController: UINavigationController {
+class NewsArticleViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.backgroundColor = UIColor.white
-        print("discover view loaded")
     }
     
 

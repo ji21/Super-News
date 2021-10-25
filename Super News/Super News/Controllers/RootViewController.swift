@@ -11,31 +11,29 @@ class RootViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let HomeVC = HomeViewController(nibName: nil, bundle: nil)
-        let ProfileVC = ProfileViewController(nibName: nil, bundle: nil)
-        let DiscoverVC = DiscoverViewController(nibName: nil, bundle: nil)
-        HomeVC.title = "Home"
-        HomeVC.navigationBar.barTintColor = UIColor.white
-        DiscoverVC.title = "Discover"
-        ProfileVC.title = "Profile"
-        self.setViewControllers([DiscoverVC, HomeVC, ProfileVC], animated: false)
-        self.selectedIndex = 1
-        self.tabBar.layer.borderWidth = 0.2
+        
+        let NewspaperVC = NewspaperViewController()
+        let NewspaperNavVC = UINavigationController(rootViewController: NewspaperVC)
+        NewspaperNavVC.tabBarItem = UITabBarItem(title: "Newspaper", image: UIImage(systemName: "newspaper"), tag: 1)
+        NewspaperNavVC.setNavigationBarHidden(false, animated: true)
+        print(NewspaperNavVC.navigationBar.frame)
+        
+        let HomeVC = HomeViewController()
+        let HomeNavVC = UINavigationController(rootViewController: HomeVC)
+        HomeNavVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 1)
+        
+        let ProfileVC = ProfileViewController()
+        let ProfileNavVC = UINavigationController(rootViewController: ProfileVC)
+        ProfileNavVC.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), tag: 1)
+        
+        
+        self.setViewControllers([NewspaperNavVC, HomeNavVC, ProfileNavVC], animated: false)
+        self.selectedIndex = 0
+        self.tabBar.layer.borderWidth = 0.3
         self.tabBar.layer.borderColor = UIColor.gray.cgColor
-        self.tabBar.tintColor = UIColor.black
-        print("okoko")
-
+        self.view.backgroundColor = UIColor.white
+        self.tabBar.tintColor = UIColor.red
+        self.tabBar.barTintColor = UIColor.white
+        self.tabBar.unselectedItemTintColor = UIColor.gray
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

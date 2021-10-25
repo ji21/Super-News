@@ -1,5 +1,5 @@
 //
-//  NewsViewController.swift
+//  NewsFeedViewController.swift
 //  Super News
 //
 //  Created by Jeffrey Ip on 24/10/2021.
@@ -7,11 +7,13 @@
 
 import UIKit
 
-class NewsViewController: UIViewController {
+class NewsFeedViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        print(self.navigationController!)
+        print("...")
         // Do any additional setup after loading the view.
     }
     
