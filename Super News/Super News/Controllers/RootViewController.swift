@@ -23,7 +23,7 @@ class RootViewController: UITabBarController {
 
 
         self.setViewControllers([HeadlinesVC, NewspaperVC, ProfileVC], animated: false)
-        self.selectedIndex = 0
+        self.selectedIndex = 1
         self.tabBar.layer.borderWidth = 0.3
         self.tabBar.layer.borderColor = UIColor.gray.cgColor
         self.tabBar.tintColor = UIColor.red
