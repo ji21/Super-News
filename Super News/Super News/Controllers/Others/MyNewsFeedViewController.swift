@@ -48,6 +48,11 @@ import UIKit
 //}
 class MyNewsFeedViewController: UICollectionViewController {
     private let NewsPostCellId : String = "NewsPostCell"
+    private let refresher : UIRefreshControl = {
+        let refresher = UIRefreshControl()
+        refresher.tintColor = .gray
+        return refresher
+    }()
     
     init(parentController: UINavigationController){
         let flowLayout = UICollectionViewFlowLayout()
@@ -64,7 +69,7 @@ class MyNewsFeedViewController: UICollectionViewController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsPostCellId, for: indexPath as IndexPath) as! NewsPostCollectionViewCell
         return cell
     }
-
+//
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 10
     }
@@ -78,11 +83,25 @@ class MyNewsFeedViewController: UICollectionViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(search))
         collectionView.register(NewsPostCollectionViewCell.self, forCellWithReuseIdentifier: NewsPostCellId)
         collectionView.showsVerticalScrollIndicator = false
-        
+        collectionView.alwaysBounceVertical = true
+        refresher.addTarget(self, action: #selector(loadData), for: .valueChanged)
+        collectionView.refreshControl = refresher
     }
     
     @objc func search(){
         
+    }
+    
+    
+
+    @objc private func loadData(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+           // Excecute after 3 seconds
+            self.collectionView.refreshControl?.endRefreshing()
+            print("should end")
+//            self.refresher.endRefreshing()
+        }
+//        collectionView.refreshControl?.endRefreshing()
     }
 
 }
