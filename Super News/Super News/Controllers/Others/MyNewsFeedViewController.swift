@@ -8,45 +8,6 @@
 import UIKit
 import SDWebImage
 
-//class MyNewsFeedViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = newsCollectionView!.dequeueReusableCell(withReuseIdentifier: "NewsPostCell", for: indexPath as IndexPath) as! NewsPostCollectionViewCell
-//        return cell
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return 10
-//    }
-//
-//    private var newsCollectionView: UICollectionView?
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        view.backgroundColor = UIColor.white
-//        navigationController?.navigationBar.prefersLargeTitles = true
-//        title = "Newspaper"
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(search))
-//        addCollectionView()
-//
-//    }
-//
-//    func addCollectionView() {
-//        let flowLayout = UICollectionViewFlowLayout()
-//        flowLayout.scrollDirection = .vertical
-//        flowLayout.itemSize = CGSize(width: view.frame.width, height: 100)
-//        newsCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: flowLayout)
-//        newsCollectionView?.register(NewsPostCollectionViewCell.self, forCellWithReuseIdentifier: "NewsPostCell")
-//        newsCollectionView?.delegate = self
-//        newsCollectionView?.dataSource = self
-//        newsCollectionView?.showsVerticalScrollIndicator = false
-//        view.addSubview(newsCollectionView!)
-//    }
-//
-//    @objc func search(){
-//
-//    }
-//
-//}
 class MyNewsFeedViewController: UICollectionViewController {
     private var NewsPostModels : [NewsPostModel] = [NewsPostModel]()
     private let NewsPostCellId : String = "NewsPostCell"
@@ -60,7 +21,7 @@ class MyNewsFeedViewController: UICollectionViewController {
     init(parentController: UINavigationController){
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
-        flowLayout.itemSize = CGSize(width: parentController.view.frame.width, height: parentController.view.frame.width*0.75)
+        flowLayout.itemSize = CGSize(width: parentController.view.frame.width, height: parentController.view.frame.width*0.9)
 //        flowLayout.itemSize.width = parentController.view.frame.width
         flowLayout.minimumLineSpacing = 0.0
         super.init(collectionViewLayout: flowLayout)
@@ -76,16 +37,19 @@ class MyNewsFeedViewController: UICollectionViewController {
 //        cell.configure(model: model)
         cell.layer.borderWidth = 0.5
         cell.layer.borderColor = UIColor.lightGray.cgColor
-        print(cell.thumbnailImageView)
-        cell.thumbnailImageView = UIImageView()
         cell.configure(model: model)
-        cell.thumbnailImageView?.sd_setImage(with: URL(string: model.thumbnailURL), placeholderImage: UIImage(named: "photo"), options: []) { (image, err, cache, url) in
-            cell.thumbnailImageView?.image = image
-            print(cell.thumbnailImageView)
-            cell.contentView.addSubview(cell.thumbnailImageView!)
-            cell.layoutSubviews()
-        }
+//        cell.thumbnailImageView.sd_setImage(with: URL(string: model.thumbnailURL), placeholderImage: UIImage(named: "photo"), options: []) { (image, err, cache, url) in
+////            if (collectionView.visibleCells.contains(cell)) {
+//                cell.layoutSubviews()
+////            }
+//        }
+        cell.thumbnailImageView.sd_setImage(with: URL(string: model.thumbnailURL), completed: nil)
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsPostCellId, for: indexPath as IndexPath) as! NewsPostCollectionViewCell
+        cell.sd_cancelCurrentImageLoad()
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

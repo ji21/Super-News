@@ -7,6 +7,7 @@
 
 import UIKit
 import YogaKit
+import SDWebImage
 
 class NewsPostCollectionViewCell: UICollectionViewCell {
     private var model:NewsPostModel?
@@ -23,7 +24,11 @@ class NewsPostCollectionViewCell: UICollectionViewCell {
 //        descriptionLabel.lineBreakMode = .byWordWrapping
         return descriptionLabel
     }()
-    public var thumbnailImageView: UIImageView?
+    public var thumbnailImageView: UIImageView = {
+       let imageView = UIImageView()
+        imageView.image = nil
+        return imageView
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,6 +45,7 @@ class NewsPostCollectionViewCell: UICollectionViewCell {
         titleLabel.text = model.title
         descriptionLabel.text = model.description
         contentView.addSubview(titleLabel)
+        contentView.addSubview(thumbnailImageView)
         contentView.addSubview(descriptionLabel)
     }
     
@@ -55,17 +61,23 @@ class NewsPostCollectionViewCell: UICollectionViewCell {
             layout.isEnabled = true
             layout.width = 100%
         }
-        thumbnailImageView?.configureLayout{ (layout) in
+        thumbnailImageView.configureLayout{ (layout) in
             layout.isEnabled = true
             layout.width = 100%
-            layout.height = 150
+            layout.height = 200
         }
         descriptionLabel.configureLayout { (layout) in
             layout.isEnabled = true
             layout.width = 100%
         }
-        
+
         contentView.yoga.applyLayout(preservingOrigin: true)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        thumbnailImageView.sd_cancelCurrentImageLoad()
+//        thumbnailImageView.image = nil
+//        thumbnailImageView.image = UIImage(systemName: "photo")
+    }
 }
