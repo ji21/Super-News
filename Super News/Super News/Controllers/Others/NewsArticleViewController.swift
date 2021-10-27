@@ -8,14 +8,26 @@
 import UIKit
 
 class NewsArticleViewController: UIViewController {
+    
+    private var model : NewsPostModel
+    
+    init(model : NewsPostModel) {
+        self.model = model
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("coder not initialized")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.white
+        title = model.title
     }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.prefersLargeTitles = false
-        title = "hihidshakuhsdaffskadhsafkdhdgkjgjknddgnjkdfgjnkdfnjkgdfsjkngffnjk"
     }
     
 

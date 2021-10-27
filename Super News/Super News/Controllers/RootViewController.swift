@@ -11,7 +11,7 @@ class RootViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.blue
+        view.backgroundColor = UIColor.white
         let NewspaperVC = NewspaperViewController()
         NewspaperVC.tabBarItem = UITabBarItem(title: "Newspaper", image: UIImage(systemName: "newspaper"), tag: 1)
 

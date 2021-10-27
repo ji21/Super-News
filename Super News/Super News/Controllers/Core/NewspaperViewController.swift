@@ -15,8 +15,10 @@ class NewspaperViewController: UINavigationController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         let NewsFeedVC = MyNewsFeedViewController(parentController: self)
-        self.pushViewController(NewsFeedVC, animated: true)
-        print(viewControllers)
+        pushViewController(NewsFeedVC, animated: true)
+//        print(viewControllers)
+        view.backgroundColor = .white
+        
     }
     
     @objc func search() {

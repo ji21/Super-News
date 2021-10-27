@@ -16,10 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         if #available(iOS 15, *) {
             let appearance = UINavigationBarAppearance()
-            appearance.configureWithDefaultBackground()
+            appearance.configureWithOpaqueBackground()
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
+        UITabBar.appearance().backgroundColor = .white
         return true
     }
 

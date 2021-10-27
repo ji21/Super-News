@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 //class MyNewsFeedViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 //    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -47,17 +48,21 @@ import UIKit
 //
 //}
 class MyNewsFeedViewController: UICollectionViewController {
+    private var NewsPostModels : [NewsPostModel] = [NewsPostModel]()
     private let NewsPostCellId : String = "NewsPostCell"
     private let refresher : UIRefreshControl = {
         let refresher = UIRefreshControl()
         refresher.tintColor = .gray
         return refresher
     }()
+    let n = 10
     
     init(parentController: UINavigationController){
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .vertical
-        flowLayout.itemSize = CGSize(width: parentController.view.frame.width, height: 100)
+        flowLayout.itemSize = CGSize(width: parentController.view.frame.width, height: parentController.view.frame.width*0.75)
+//        flowLayout.itemSize.width = parentController.view.frame.width
+        flowLayout.minimumLineSpacing = 0.0
         super.init(collectionViewLayout: flowLayout)
     }
     
@@ -67,25 +72,52 @@ class MyNewsFeedViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsPostCellId, for: indexPath as IndexPath) as! NewsPostCollectionViewCell
+        let model = NewsPostModels[indexPath.row]
+//        cell.configure(model: model)
+        cell.layer.borderWidth = 0.5
+        cell.layer.borderColor = UIColor.lightGray.cgColor
+        print(cell.thumbnailImageView)
+        cell.thumbnailImageView = UIImageView()
+        cell.configure(model: model)
+        cell.thumbnailImageView?.sd_setImage(with: URL(string: model.thumbnailURL), placeholderImage: UIImage(named: "photo"), options: []) { (image, err, cache, url) in
+            cell.thumbnailImageView?.image = image
+            print(cell.thumbnailImageView)
+            cell.contentView.addSubview(cell.thumbnailImageView!)
+            cell.layoutSubviews()
+        }
         return cell
     }
-//
+
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let model = NewsPostModels[indexPath.row]
+        let NewsArticleVC = NewsArticleViewController(model: model)
+        navigationController?.pushViewController(NewsArticleVC, animated: true)
+    }
+
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return n
     }
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.red
-        navigationController?.navigationBar.prefersLargeTitles = true
+        view.backgroundColor = UIColor.white
         title = "Newspaper"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(search))
+        for _ in 0...n{
+            NewsPostModels.append(NewsPostModel(thumbnailImageView: nil))
+        }
+        navigationController?.navigationBar.tintColor = .black
+        navigationItem.rightBarButtonItems = [UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(search)), UIBarButtonItem(image: UIImage(systemName: "cloud.bolt.rain"), style: .plain, target: self, action: #selector(search))]
         collectionView.register(NewsPostCollectionViewCell.self, forCellWithReuseIdentifier: NewsPostCellId)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.alwaysBounceVertical = true
         refresher.addTarget(self, action: #selector(loadData), for: .valueChanged)
         collectionView.refreshControl = refresher
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     @objc func search(){

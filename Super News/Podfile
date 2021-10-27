@@ -1,0 +1,10 @@
+# Uncomment the next line to define a global platform for your project
+platform :ios, '11.0'
+
+target 'Super News' do
+  use_frameworks!
+  pod 'SDWebImage'
+  pod 'YogaKit', '~> 1.7'
+  # Pods for Super News
+
+end
